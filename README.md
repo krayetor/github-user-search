@@ -8,18 +8,18 @@ By the end of this project, I will be able to:
 
 1.**bold**Set Up a React Project for API Integration:**bold**
 
-    - Create and configure a new React application for integrating with external APIs, specifically the GitHub API.
+- Create and configure a new React application for integrating with external APIs, specifically the GitHub API.
     
 2.**bold**Develop Basic and Advanced Search Features Using GitHub API:**bold**
 
-    - Implement basic search functionality to fetch and display GitHub user data.
+- Implement basic search functionality to fetch and display GitHub user data.
 
-    - Enhance the search functionality to include advanced filtering criteria, such as location and repository count.
+- Enhance the search functionality to include advanced filtering criteria, such as location and repository count.
     
 3.**bold**Improve User Interface and Experience:**bold**
 
-    - Utilize Tailwind CSS to style my application, ensuring a responsive and visually appealing design.
+- Utilize Tailwind CSS to style my application, ensuring a responsive and visually appealing design.
 
 4.**bold**Deploy the Application to a Web Hosting Platform:**bold**
 
-    - Deploy my application to Vercel, making it publicly accessible and ensuring it performs well under real-world conditions.
+- Deploy my application to Vercel, making it publicly accessible and ensuring it performs well under real-world conditions.
