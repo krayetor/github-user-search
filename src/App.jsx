@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { searchUsers } from "./services/githubServices";
+import Search from "./components/Search";
 
 function App() {
   // will use this later to store data
@@ -20,7 +20,7 @@ function App() {
       {/* Header / navbar */}
       <header className="bg-slate-800 p-4 shadow-md border-b border-slate-700">
         <div className="container mx-auto flex items-center gap-3">
-          {/* icon */}
+          {/* GitHub icon for academic purposes */}
           <svg
             viewBox="0 0 98 96"
             width="36"
@@ -43,14 +43,7 @@ function App() {
 
       {/* main content area */}
       <main className="max-w-3xl mx-auto p-4 w-full">
-        <div className="bg-slate-800 p-8 rounded-lg border border-slate-700 mt-8 text-center">
-          <h2 className="text-2xl font-semibold text-white mb-4">Welcome</h2>
-          <p className="text-gray-400">
-            This is the base layout for the GitHub User Search application.
-            <br />
-            Components will be loaded here later...
-          </p>
-        </div>
+        <Search />
       </main>
 
       {/* footer with disclaimer */}
