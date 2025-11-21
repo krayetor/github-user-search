@@ -1,16 +1,9 @@
 import axios from 'axios';
 
-const githubApi = axios.create({
-    baseURL: "https://api.github.com",
-    headers: {
-        Authorization: `token ${import.meta.env.VITE_APP_GITHUB_API_KEY}`
-    },
-});
-
 export const searchUsers = async (username, location, minRepos, page = 1) => {
     try {
         // start with the base query (username)
-        let query = `q=${username}`;
+        let query = username;
 
         // append the location if provided
         if (location) {
@@ -22,7 +15,14 @@ export const searchUsers = async (username, location, minRepos, page = 1) => {
             query += `repos:>${minRepos}`;
         }
 
-        const response = await githubApi.get(`/search/users?${query}&page=${page}&per_page=10`);
+        const url = `https://api.github.com/search/users?q=${query}&page=${page}&per_page=10`;
+
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `token ${import.meta.env.VITE_APP_GITHUB_API_KEY}`
+            },
+        });
+
         return response.data;
     } catch (error) {
         throw error;
@@ -31,6 +31,15 @@ export const searchUsers = async (username, location, minRepos, page = 1) => {
 
 // helps to get details for a specific user (since Search API doesn't give full details)
 export const fetchUserDetails = async (username) => {
-    const response = await githubApi.get(`/users/${username}`);
-    return response.data;
+
+    try {
+        const response = await axios.get(`https://api.github.com/users/${username}`, {
+            headers: {
+                Authorization: `token ${import.meta.env.VITE_APP_GITHUB_API_KEY}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 };
