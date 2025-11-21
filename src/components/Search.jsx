@@ -1,87 +1,173 @@
-import React, { use, useState } from "react";
-import { fetchUserData } from "../services/githubServices";
+import React, { useState } from "react";
+import { searchUsers, fetchUserDetails } from "../services/githubService";
 
 function Search() {
+    // form state
     const [username, setUsername] = useState('');
-    const [userData, setUserData] = useState(null);
+    const [location, setLocation] = useState('');
+    const [minRepos, setMinRepos] = useState('');
+
+    // data state
+    const [users, setUsers] = useState([]); // array of users
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSearch = async (e, newPage = 1) => {
+        if (e) e.preventDefault();
 
-        // reset states before new search
+        // dont search if empty
+        if (!username && !location) return;
+
         setLoading(true);
         setError(false);
-        setUserData(null);
 
         try {
-            const data = await fetchUserData(username);
-            console.log("API DATA:", data);
-            setUserData(data);
+            // perform the search
+            const data = await searchUsers(username, location, minRepos, newPage);
+
+            // fetch details for each user
+            const detailedUsers = await Promise.all(
+                data.items.map(async (user) => {
+                    return await fetchUserDetails(user.login);
+                })
+            );
+
+            if (newPage === 1) {
+                setUsers(detailedUsers);
+            } else {
+                setUsers(prev => {
+                    const existingIds = new Set(prev.map(u => u.id));
+                    const uniqueNewUsers = detailedUsers.filter(u => !existingIds.has(u.id));
+                    return [...prev, ...uniqueNewUsers];
+                })
+            }
+
+            // check if there are more results
+            setHasMore(data.total_count > newPage * 10);
+            setPage(newPage);
+
         } catch (err) {
+            console.error(err);
             setError(true);
         } finally {
             setLoading(false);
         }
     };
 
+    const loadMore = () => {
+       handleSearch(null, page + 1);
+    };
+
     return (
-        <div className="w-full max-w-xl mx-auto">
-            {/* search form */}
-            <form onSubmit={handleSubmit} className="flex gap-4 mb-8 bg-slate-800 p-6 rounded-lg border border-slate-700 shadow-lg">
-                <input
-                    type="text"
-                    placeholder="Enter Github username..."
-                    className="flex-1 bg-slate-900 border-slate-600 text-white placeholder-gray-400 rounded-md py-2 px-4 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <button
+        <div className="w-full mx-auto">
+            {/* advanced search form */}
+            <form onSubmit={(e) => handleSearch(e, 1)} className="bg-white dark:bg-slate-800 p-6 rounded-lg border border-gray-200 dark:border-slate-700 shadow-lg mb-8 transition-colors duration-300">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    {/* username input */}
+                    <input
+                        type="text"
+                        placeholder="Username (e.g. krayetor)"
+                        className="bg-gray-50 dark:bg-slate-900 border boder-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+
+                    {/* location input */}
+                    <input
+                        type="text"
+                        placeholder="Location (e.g. Mars)"
+                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 transition-colors"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                    />
+                </div>
+
+                <div className="flex flex-col md:flex-row gap-4">
+                    {/* min repo input */}
+                    <input
+                        type="number"
+                        placeholder="Min Repositories"
+                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 w-full md:w-1/3 transition-colors"
+                        value={minRepos}
+                        onChange={(e) => setMinRepos(e.target.value)}
+                    />
+
+                    {/* search button */}
+                    <button
                     type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-md transition-colors"
-                >
-                    Search
-                </button>
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded w-full md:w-2/3 transition-colors shadow-md hover:shadow-lg"
+                    >
+                        Search GitHub
+                    </button>
+                </div>
             </form>
 
-            {/* conditional rendering section */}
-            <div className="text-center">
+            {/* error state */}
+            {error && (
+                <div className="text-center text-red-600 dark:text-red-400 mb-4 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded">
+                    Something went wrong. Please try again.
+                </div>
+            )}
 
-                {/* loading state */}
-                {loading && (
-                    <p className="text-lg text-gray-300 animate-pulse">Loading...</p>
-                )}
-
-                {/* error state */}
-                {error && (
-                    <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-lg">
-                        Looks like we cant find the user
-                    </div>
-                )}
-
-                {/* success state (display basic info) */}
-                {userData && (
-                    <div className="bg-slate-800 p-8 rounded-lg border border-slate-700 shadow-xl flex flex-col items-center animate-fade-in">
+            {/* results grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {users.map((user) => (
+                    <div
+                        key={user.id}
+                        className="bg-white dark:bg-slate-800 p-6 rounded-lg border border-gray-200 dark:border-slate-700 shadow-md hover:border-green-500 dark:hover:border-green-500 transition-all duration-300 group flex items-start gap-4"
+                    >
                         <img
-                            src={userData.avatar_url}
-                            alt={`${userData.login}'s avatar`}
-                            className="w-32 h-32 rounded-full border-green-500 mb-4 shadow-lg"
+                            src={user.avatar_url}
+                            alt={user.login}
+                            className="w-16 h-16 rounded-full border-2 border-gray-200 dark:border-slate-600 shrink-0"
                         />
-                        <h2 className="text-2xl font-bold text-white mb-2">
-                            {userData.name || userData.login}
-                        </h2>
-                        <a
-                            href={userData.html_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-400 hover:text-green-300 hover:underline underline-offset-4 font-medium"
-                        >
-                            View GitHub Profile
-                        </a>
+
+                        <div className="flex-1 overflow-hidden">
+                            <h3 className="text-xl font-bold text-white truncate">{user.name || user.login}</h3>
+                            <a
+                                href={user.html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-green-600 dark:text-green-400 text-sm mb-2 hover:underline inline-block font-medium"
+                            >
+                                @{user.login}
+                            </a>
+
+                            {/* advanced details */}
+                            <div className="text-gray-500 dark:text-slate-400 text-sm flex flex-col gap-1 mb-4 mt-2">
+                                <p>📍 {user.location || 'N/A'}</p>
+                                <p>📚 {user.public_repos} Repositories</p>
+                            </div>
+
+                            <a
+                                href={user.html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-white py-1 px-3 rounded transition-colors inline-block font-medium border border-gray-200 dark:border-transparent"
+                            >
+                              View Profile
+                            </a>
+                        </div>
                     </div>
-                )}
+                ))}
             </div>
+
+            {/* loading state */}
+            {loading && <p className="text-center text-gray-500 dark:text-gray-400 mt-8 animate-pulse">Loading results...</p>}
+
+            {/* loading more button */}
+            {!loading && hasMore && (
+                <div className="text-center mt-8">
+                    <button
+                        onClick={loadMore}
+                        className="bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600 text-gray-800 dark:text-white font-semibold py-2 px-6 rounded border border-gray-300 dark:border-slate-600 transition-colors shadow-sm"
+                    >
+                        Load More Users
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
