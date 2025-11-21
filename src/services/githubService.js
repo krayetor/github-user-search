@@ -30,7 +30,7 @@ export const searchUsers = async (username, location, minRepos, page = 1) => {
 };
 
 // helps to get details for a specific user (since Search API doesn't give full details)
-export const fetchUserDetails = async (username) => {
+export const fetchUserData = async (username) => {
 
     try {
         const response = await axios.get(`https://api.github.com/users/${username}`, {
