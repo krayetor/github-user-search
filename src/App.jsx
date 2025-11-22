@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Search from "./components/Search";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
 
@@ -101,6 +102,9 @@ function App() {
         </p>
         <p>Not affiliated with or endorsed by GitHub Inc.</p>
       </footer>
+
+      <Analytics />
+      
     </div>
   );
 }
