@@ -189,7 +189,7 @@ function Search() {
                     {/* search button */}
                     <button
                     type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded w-full md:w-2/3 transition-colors shadow-md hover:shadow-lg"
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded w-full transition-colors shadow-md hover:shadow-lg"
                     >
                         Search
                     </button>
