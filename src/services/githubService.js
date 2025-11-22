@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { use } from 'react';
 
-export const searchUsers = async (username, location, minRepos, page = 1) => {
+export const searchUsers = async (username, location, minRepos, sortType, page = 1) => {
     try {
         // start with the base query (username)
         let query = username;
@@ -15,7 +16,11 @@ export const searchUsers = async (username, location, minRepos, page = 1) => {
             query += `repos:>${minRepos}`;
         }
 
-        const url = `https://api.github.com/search/users?q=${query}&page=${page}&per_page=10`;
+        let url = `https://api.github.com/search/users?q=${query}&page=${page}&per_page=10`;
+
+        if (sortType && sortType !== 'best-match') {
+            url += `&sort=${sortType}&order=desc`;
+        }
 
         const response = await axios.get(url, {
             headers: {
@@ -43,3 +48,18 @@ export const fetchUserData = async (username) => {
         throw error;
     }
 };
+
+export const fetchUserRepos = async (username) => {
+    try {
+        // sort by 'updated' to get the frehest work
+        const response = await axios.get(`https://api.github.com/users/${username}/repos?sort=updated&per_page=5`, {
+            headers: {
+                Authorization: `token ${import.meta.env.VITE_APP_GITHUB_API_KEY}`
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching repos:", error);
+        return []; // retrun empty array on error so the app doesn't crash
+    }
+}
