@@ -8,6 +8,7 @@ function Search() {
     const [username, setUsername] = useState('');
     const [location, setLocation] = useState('');
     const [minRepos, setMinRepos] = useState('');
+    const [language, setLanguage] = useState('');
 
     const [sortType, setSortType] = useState('best-match');
     // app state
@@ -17,6 +18,7 @@ function Search() {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(false);
     const [history, setHistory] = useState([]);
+    const [hasSearched, setHasSearched] = useState(false);
 
     const [selectedUser, setSelectedUser] = useState(null);
     const [userRepos, setUserRepos] = useState([]);
@@ -94,7 +96,7 @@ function Search() {
 
         try {
             // perform the search
-            const data = await searchUsers(query, location, minRepos, sortType, newPage);
+            const data = await searchUsers(query, location, minRepos, language, sortType, newPage);
 
             // fetch details for each user
             const detailedUsers = await Promise.all(
@@ -122,6 +124,7 @@ function Search() {
             setError(true);
         } finally {
             setLoading(false);
+            setHasSearched(true);
         }
     };
 
@@ -158,9 +161,20 @@ function Search() {
                     <input
                         type="text"
                         placeholder="Location (e.g. Mars)"
-                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 transition-colors"
+                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
+                    />
+                </div>
+
+                {/* languages  */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <input
+                        type="text"
+                        placeholder="Languages (e.g. C++, Python)"
+                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500"
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
                     />
                 </div>
 
@@ -198,7 +212,7 @@ function Search() {
 
             {/* history chips section */}
             {history.length > 0 && (
-                <div className="flex items-center gap-2 mb-8 flex-wrap animate-fade-in">
+                <div className="flex items-center gap-2 mb-8 flex-wrap">
                     <span className="text-sm text-gray-500 dark:text-slate-400">Recent:</span>
                     {history.map((term, index) => (
                         <button
@@ -222,6 +236,19 @@ function Search() {
             {error && (
                 <div className="text-center text-red-600 dark:text-red-400 mb-4 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded">
                     Something went wrong. Please try again.
+                </div>
+            )}
+
+            {/* user not found state */}
+            {!loading && !error && hasSearched && users.length === 0 && (
+                <div className="text-center py-12 bg-white dark:bg-slate-800 rounded-lg border border-dashed dark:border-slate-700 animate-fade-in">
+                    <div className="text-4xl mb-2">🔍</div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        No users found
+                    </h3>
+                    <p className="text-gray-500 dark:text-slate-400 text-sm">
+                        We couldn't find anyone matching "{username}"
+                    </p>
                 </div>
             )}
 

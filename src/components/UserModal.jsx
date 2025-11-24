@@ -145,13 +145,50 @@ const UserModal = ({ user, repos, onClose}) => {
                                                 itemStyle={{ color: '#000000' }}
                                                 cursor={{ fill: 'transparent' }}
                                             />
-                                            <legend height={36}/>
+                                            <Legend 
+                                                verticalAlign="bottom"
+                                                height={36}
+                                                iconType="circle" // make the icons round dots instead of squares
+                                                // this style object forces the text to be readable in dark mode
+                                                wrapperStyle={{
+                                                    paddingTop: '20px',
+                                                    fontSize: '12px',
+                                                    fontFamily: 'sans-serif'
+                                                }}
+                                                formatter={(value) => <span className="text-slate-600 dark:text-slate-300 font-medium ml-1">{value}</span>}
+                                            />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
                             </div>
                         </div>
                     )}
+
+                    {/* GitHub contribution Heatmap */}
+                    <div className="mt-8 mb-8 pt-6 border-t border-gray-200 dark:border-slate-700">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex itemx-center gap-2">
+                            <span className="text-2xl">🔥</span>Contribution Map
+                        </h3>
+
+                        {/* wrapping the image in a scrollable container incase it's too wide for mobile.
+                            also give it a white bg/padding in dark mode so the chart is visible
+                        */}
+                        <div className="overflow-x-auto pb-2 future-scrollbar">
+                            <div className="min-w-[600px] p-4 rounded border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 transition-colors duration-300">
+                            
+                                <img
+                                    src={`https://ghchart.rshah.org/4ade80/${user.login}`}
+                                    alt="GitHub Contribution Graph"
+                                    className="w-full"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <p className="text-xs text-gray-900 dark:text-white text-center mt-2">
+                                Heatmap generated via ghchart.rshah.org
+                            </p>
+                        </div>
+                    </div>
 
                     {/* latest repo section */}
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">

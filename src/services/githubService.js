@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { use } from 'react';
 
-export const searchUsers = async (username, location, minRepos, sortType, page = 1) => {
+export const searchUsers = async (username, location, minRepos, language, sortType, page = 1) => {
     try {
         // start with the base query (username)
         let query = username;
@@ -13,7 +13,11 @@ export const searchUsers = async (username, location, minRepos, sortType, page =
 
         // append repo count if provided
         if (minRepos) {
-            query += `repos:>${minRepos}`;
+            query += `repos:>=${minRepos}`;
+        }
+
+        if (language) {
+            query += `+language:${language}`;
         }
 
         let url = `https://api.github.com/search/users?q=${query}&page=${page}&per_page=10`;
@@ -51,7 +55,7 @@ export const fetchUserData = async (username) => {
 
 export const fetchUserRepos = async (username) => {
     try {
-        // sort by 'updated' to get the frehest work
+        // sort by 'updated' to get the freshest work
         const response = await axios.get(`https://api.github.com/users/${username}/repos?sort=updated&per_page=5`, {
             headers: {
                 Authorization: `token ${import.meta.env.VITE_APP_GITHUB_API_KEY}`
@@ -60,6 +64,6 @@ export const fetchUserRepos = async (username) => {
         return response.data;
     } catch (error) {
         console.error("Error fetching repos:", error);
-        return []; // retrun empty array on error so the app doesn't crash
+        return []; // return empty array on error so the app doesn't crash
     }
 }
