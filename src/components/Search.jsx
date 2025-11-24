@@ -145,45 +145,43 @@ function Search() {
             )}
 
             {/* advanced search form */}
-            <form onSubmit={(e) => handleSearch(e, 1)} className="bg-white dark:bg-slate-800 p-6 rounded-lg border border-gray-200 dark:border-slate-700 shadow-lg mb-4 transition-colors duration-300">
+            <form 
+                onSubmit={(e) => handleSearch(e, 1)} 
+                className="bg-white dark:bg-slate-800 p-6 rounded-md border border-gray-200 dark:border-slate-700 shadow-lg mb-4 transition-colors flex flex-col gap-4 max-w-sm mx-auto w-full"
+            >
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    {/* username input */}
-                    <input
-                        type="text"
-                        placeholder="Username (e.g. krayetor)"
-                        className="bg-gray-50 dark:bg-slate-900 border boder-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
+                {/* username input */}
+                <input
+                    type="text"
+                    placeholder="Username (e.g. krayetor)"
+                    className="bg-gray-50 dark:bg-slate-900 border boder-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 transition-colors w-full"                        value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
 
-                    {/* location input */}
-                    <input
-                        type="text"
-                        placeholder="Location (e.g. Mars)"
-                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                    />
-                </div>
+                {/* location input */}
+                <input
+                    type="text"
+                    placeholder="Location (e.g. Mars)"
+                    className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 transition-colors w-full"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                />
 
                 {/* languages  */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <input
-                        type="text"
-                        placeholder="Languages (e.g. C++, Python)"
-                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500"
-                        value={language}
-                        onChange={(e) => setLanguage(e.target.value)}
-                    />
-                </div>
-
-                <div className="grid grid-col md:grid-row gap-4">
+                <input
+                    type="text"
+                    placeholder="Languages (e.g. C++, Python)"
+                    className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 transition-colors w-full"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* min repo input */}
                     <input
                         type="number"
                         placeholder="Min Repos"
-                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500"
+                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 transition-colors w-full"
                         value={minRepos}
                         onChange={(e) => setMinRepos(e.target.value)}
                     />
@@ -191,23 +189,25 @@ function Search() {
                     <select
                         value={sortType}
                         onChange={(e) => setSortType(e.target.value)}
-                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 cursor-pointer"
+                        className="bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white p-3 rounded focus:outline-none focus:border-green-500 cursor-pointer transition-colors w-full"
                     >
                         <option value="best-match">Best Match</option>
                         <option value="followers">Most Followers</option>
                         <option value="repositories">Repositories</option>
                         <option value="joined">Newest Joined</option>
-
                     </select>
+                </div>
 
+                <div className="flex justify-center mt-2">
                     {/* search button */}
                     <button
-                    type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded w-full transition-colors shadow-md hover:shadow-lg"
+                        type="submit"
+                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded transition-colors shadow-md hover:shadow-lg w-full"
                     >
                         Search
                     </button>
                 </div>
+                
             </form>
 
             {/* history chips section */}
