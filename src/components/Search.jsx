@@ -147,7 +147,7 @@ function Search() {
             {/* advanced search form */}
             <form 
                 onSubmit={(e) => handleSearch(e, 1)} 
-                className="bg-white dark:bg-slate-800 p-6 rounded-md border border-gray-200 dark:border-slate-700 shadow-lg mb-4 transition-colors flex flex-col gap-4 max-w-sm mx-auto w-full"
+                className="bg-white dark:bg-slate-800 p-6 rounded-lg border border-gray-200 dark:border-slate-700 shadow-lg mb-4 transition-colors flex flex-col gap-4 max-w-sm mx-auto w-full"
             >
                 
                 {/* username input */}

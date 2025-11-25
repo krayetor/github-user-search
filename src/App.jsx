@@ -84,7 +84,7 @@ function App() {
       </header>
 
       {/* main content area */}
-      <main className="w-full max-w-3xl mx-auto p-10 flex-1 flex flex-col justify-center">
+      <main className="w-full max-w-3xl mx-auto p-4 flex-1 flex flex-col justify-center">
         <Search />
       </main>
 
