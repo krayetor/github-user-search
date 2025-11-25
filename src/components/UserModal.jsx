@@ -37,13 +37,13 @@ const UserModal = ({ user, repos, onClose}) => {
     return (
         // backdrop (dark transparent background)
         <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex justify-center items-start md:items-center p-4 animate-fade-in overflow-y-auto"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex justify-center items-start md:items-center p-4 animate-fade-in overflow-y-auto future-scrollbar"
             onClick={onClose}
         >
 
             {/* modal card (clicking inside it from closing) */}
             <div
-                className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto no-scrollbar border border-gray-200 dark:border-slate-700 relative" 
+                className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-slate-700 relative" 
                 onClick={(e) => e.stopPropagation()}
             >
 
