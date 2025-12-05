@@ -4,7 +4,7 @@
 
 > A modern, responsive React application to search for GitHub users, visualize their repository data, and view contribution activity in a sleek interface.
 
-[![Vercel App](https://therealsujitk-vercel-badge.vercel.app/?app=github-user-search-krayetor)](https://krayetor-gus.vercel.app)
+[![Vercel App](https://therealsujitk-vercel-badge.vercel.app/?app=krayetor-gus)](https://krayetor-gus.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
 [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
