@@ -90,8 +90,20 @@ function App() {
 
       {/* footer with disclaimer */}
       <footer className="text-center text-gray-500 dark:text-slate-500 text-sm py-6">
-        <p className="mt-2">
-          Developed by{' '}
+        <p className="mb-2">
+          view project repo {''}
+          <a 
+            href="https://github.com/krayetor/alx-fe-reactjs/tree/main/github-user-search"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-slate-400 underline underline-offser-4 hover:text-green-400 transition-colors duration-300"
+          >
+            here
+          </a>
+        </p>
+        
+        <p className="mb-2">
+          connect with the developer{' '}
           <a 
             href="https://x.com/krayetor"
             target="_blank"
@@ -101,6 +113,7 @@ function App() {
             @krayetor
           </a>
         </p>
+        
         <p>Not affiliated with or endorsed by GitHub Inc.</p>
       </footer>
 

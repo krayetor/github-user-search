@@ -1,25 +1,66 @@
-# Working with APIs
+# 🔍 GitHub User Search Application
 
-I will be developing a GitHub User Search Application using React. This project will guide you through integrating with the GitHub API, handling user authentication, and deploying your application to a web hosting platform. I will gain hands-on experience in API interactions, advanced HTTP networking, and deploying web applications.
+![Project Preview](public/social-preview.png)
 
-## Learning Objectives
+> A modern, responsive React application to search for GitHub users, visualize their repository data, and view contribution activity in a sleek interface.
 
-By the end of this project, I will be able to:
+[![Vercel App](https://therealsujitk-vercel-badge.vercel.app/?app=github-user-search-krayetor)](https://krayetor-gus.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-1. **Set Up a React Project for API Integration:**
+---
 
-- Create and configure a new React application for integrating with external APIs, specifically the GitHub API.
-    
-2. **Develop Basic and Advanced Search Features Using GitHub API:**
+## 🚀 Features
 
-- Implement basic search functionality to fetch and display GitHub user data.
+This isn't just a simple search tool. It is packed with advanced features and polished UI micro-interactions.
 
-- Enhance the search functionality to include advanced filtering criteria, such as location and repository count.
-    
-3. **Improve User Interface and Experience:**
+### 🎨 User Interface & Experience
+* **Glassmorphism UI:** Sticky, blurred header ("Pearl" effect) for a modern feel.
+* **Persistent Dark/Light Mode:** Automatically saves your theme preference.
+* **Skeleton Loading:** Smooth loading states instead of jarring spinners.
+* **Futuristic Scrollbars:** Custom neon-green thin scrollbars.
+* **Mobile Optimized:** Fully responsive layout for phones and tablets.
 
-- Utilize Tailwind CSS to style my application, ensuring a responsive and visually appealing design.
+### 🛠️ Functionality
+* **Advanced Filtering:** Search by **Location**, **Language**, and **Minimum Repositories**.
+* **Smart Sorting:** Sort results by *Most Followers*, *Most Repositories*, or *Newest Joined*.
+* **Search History:** Saves your recent searches using Local Storage for quick access.
+* **Empty States:** Handles "User Not Found" and API errors gracefully.
 
-4. **Deploy the Application to a Web Hosting Platform:**
+### 📊 Data Visualization
+* **"Quick View" Modal:** View profile details without leaving the search page.
+* **Top Languages Chart:** Analyzes the user's latest repositories to generate a **Pie Chart** of their most-used languages (powered by Recharts).
+* **Contribution Heatmap:** A theme-aware contribution graph that adapts colors to Dark/Light mode automatically.
 
-- Deploy my application to Vercel, making it publicly accessible and ensuring it performs well under real-world conditions.
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend Framework:** [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **HTTP Client:** [Axios](https://axios-http.com/)
+* **Charts:** [Recharts](https://recharts.org/)
+* **Hosting:** [Vercel](https://vercel.com/)
+* **Analytics:** Vercel Analytics & Speed Insights
+
+---
+
+## ⚡ Getting Started
+
+Follow these steps to run the project locally.
+
+### 1. Clone the repository
+```bash
+git clone [https://github.com/YOUR_USERNAME/github-user-search.git]
+[text](https://github.com/krayetor/alx-fe-reactjs/tree/main/github-user-search)
+cd github-user-search
+
+🌟 Show your support
+Give a ⭐️ if you liked this project!
+
+
+### 💡 Final Tip before you push:
+Remember to replace **`YOUR_USERNAME`** in the links (Clone link, Contributing link) with your actual GitHub username so the links work!
+
+**Once you push this, your repository will look incredibly professional.**
