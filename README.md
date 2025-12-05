@@ -55,6 +55,7 @@ Follow these steps to run the project locally.
 git clone [https://github.com/YOUR_USERNAME/github-user-search.git]
 [text](https://github.com/krayetor/alx-fe-reactjs/tree/main/github-user-search)
 cd github-user-search
+```
 
 🌟 Show your support
 Give a ⭐️ if you liked this project!
