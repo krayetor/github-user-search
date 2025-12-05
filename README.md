@@ -52,8 +52,7 @@ Follow these steps to run the project locally.
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/YOUR_USERNAME/github-user-search.git]
-[text](https://github.com/krayetor/alx-fe-reactjs/tree/main/github-user-search)
+git clone [https://github.com/YOUR_USERNAME/github-user-search.git](https://github.com/krayetor/alx-fe-reactjs/tree/main/github-user-search)
 cd github-user-search
 ```
 
@@ -63,5 +62,3 @@ Give a ⭐️ if you liked this project!
 
 ### 💡 Final Tip before you push:
 Remember to replace **`YOUR_USERNAME`** in the links (Clone link, Contributing link) with your actual GitHub username so the links work!
-
-**Once you push this, your repository will look incredibly professional.**
