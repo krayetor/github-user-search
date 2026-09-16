@@ -1,36 +1,52 @@
 import React, { useState, useEffect } from "react";
 import Search from "./components/Search";
+import RateLimitBadge from "./components/RateLimitBadge";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
 function App() {
 
-  const [theme, setTheme] = useState('dark');
+  // Lazy initializer reads from localStorage so the correct theme
+  // is applied from the very first render, surviving page refreshes.
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  // Holds the latest rate-limit info returned by the GitHub Search API.
+  // Null until the first search is made (badge is hidden until then).
+  const [rateLimit, setRateLimit] = useState(null);
 
   useEffect(() => {
-    // get the html tag specifically
     const root = window.document.documentElement;
-
-    // safety check: if the browser hasn't loaded the tag yet, stop
     if (!root) return;
-    // add or remove the class
 
     if (theme === 'dark') {
-    root.classList.add('dark');
+      root.classList.add('dark');
     } else {
-    root.classList.remove('dark');
+      root.classList.remove('dark');
     }
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    const root = window.document.documentElement;
+    if (root) {
+      if (nextTheme === 'dark') {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+    }
+    localStorage.setItem('theme', nextTheme);
+    setTheme(nextTheme);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-slate-900 text-gray-900 dark:text-gray-100 font-sans flex flex-col transition-colors duration-300">
+    <div className="min-h-screen bg-gray-100 dark:bg-slate-900 text-gray-900 dark:text-gray-100 font-sans flex flex-col transition-colors duration-200">
 
       {/* Header / navbar */}
-      <header className="sticky top-4 z-50 mx-auto w-[95%] max-w-3xl bg-white/70 dark:bg-slate-800/60 backdrop-blur-md border border-gray-200 dark:border-slate-700/50 p-4 shadow-xl rounded-full px-6 py-3 mb-4 transition-colors duration-300">
+      <header className="sticky top-4 z-50 mx-auto w-[95%] max-w-3xl bg-white/70 dark:bg-slate-800/60 backdrop-blur-md border border-gray-200 dark:border-slate-700/50 p-4 shadow-xl rounded-full px-6 py-3 mb-4 transition-colors duration-200">
 
         <div className="flex items-center justify-between">
           
@@ -44,7 +60,7 @@ function App() {
                 width="32"
                 height="32"
                 fill="currentColor"
-                className="text-gray-900 dark:text-white hover:text-green-500 dark:hover:text-green-500 transition-colors duration-300 cursor-pointer"
+                className="text-gray-900 dark:text-white hover:text-green-500 dark:hover:text-green-500 transition-colors duration-200 cursor-pointer"
               >
                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
               </svg>
@@ -53,10 +69,13 @@ function App() {
               </h1>
             </div>
 
+            {/* center: rate limit badge (visible after first search) */}
+            <RateLimitBadge rateLimit={rateLimit} />
+
             {/* right side: theme toggle button */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-yellow-300 hover:scale-110 transition-all duration-300"
+              className="p-2 rounded-full bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-yellow-300 hover:scale-110 transition-all duration-200"
               aria-label="Toggle Theme"
             >
               {theme === 'dark' ? (
@@ -85,22 +104,22 @@ function App() {
 
       {/* main content area */}
       <main className="w-full max-w-3xl mx-auto p-4 flex-1 flex flex-col justify-center">
-        <Search />
+        <Search onRateLimitUpdate={setRateLimit} />
       </main>
 
       {/* footer with disclaimer */}
       <footer className="text-center text-gray-500 dark:text-slate-500 text-sm py-6">
-        <p className="mb-2">
-          view project repo {''}
-          <a 
-            href="https://github.com/krayetor/alx-fe-reactjs/tree/main/github-user-search"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-slate-400 underline underline-offser-4 hover:text-green-400 transition-colors duration-300"
-          >
-            here
-          </a>
-        </p>
+          <p className="mb-2">
+            view project repo{' '}
+            <a 
+              href="https://github.com/krayetor/github-user-search"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-slate-400 underline underline-offset-4 hover:text-green-400 transition-colors duration-300"
+            >
+              here
+            </a>
+          </p>
         
         <p className="mb-2">
           connect with the developer{' '}
@@ -108,7 +127,7 @@ function App() {
             href="https://x.com/krayetor"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-slate-400 underline underline-offser-4 hover:text-green-400 transition-colors duration-300"
+            className="font-medium text-slate-400 underline underline-offset-4 hover:text-green-400 transition-colors duration-300"
           >
             @krayetor
           </a>

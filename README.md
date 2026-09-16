@@ -22,16 +22,21 @@ This isn't just a simple search tool. It is packed with advanced features and po
 * **Futuristic Scrollbars:** Custom neon-green thin scrollbars.
 * **Mobile Optimized:** Fully responsive layout for phones and tablets.
 
-### 🛠️ Functionality
+### 🛠️ Functionality & Power Features
+* **⚔️ Developer Versus ("Compare") Mode:** Benchmark two developers head-to-head with live scoring, visual ratio bars for followers & repos, and language breakdowns.
+* **🚀 Quick Explore Presets:** 1-click curated chips (`🔥 Top Rust`, `⚡ React & TS`, `🐍 Python Gurus`, `🌍 Most Followed`, `🇬🇭 Ghana`, `🇳🇬 Lagos`) to instantly discover talent.
+* **📥 CSV & JSON Export:** Export search results and shortlisted bookmarks with one click for candidate tracking or data analysis.
+* **⌨️ Keyboard Shortcuts:** Focus search instantly from anywhere using `/` or `⌘K` / `Ctrl+K`, and dismiss modals with `Esc`.
 * **Advanced Filtering:** Search by **Location**, **Language**, and **Minimum Repositories**.
-* **Smart Sorting:** Sort results by *Most Followers*, *Most Repositories*, or *Newest Joined*.
-* **Search History:** Saves your recent searches using Local Storage for quick access.
-* **Empty States:** Handles "User Not Found" and API errors gracefully.
+* **Smart Sorting:** Sort results by *Best Match*, *Most Followers*, *Most Repositories*, or *Newest Joined*.
+* **Search History & Bookmarks:** Quick bookmarking of favorite profiles and local history tracking.
+* **Empty States & Rate-Limit Tracking:** Live API quota badge and graceful error states.
 
-### 📊 Data Visualization
-* **"Quick View" Modal:** View profile details without leaving the search page.
-* **Top Languages Chart:** Analyzes the user's latest repositories to generate a **Pie Chart** of their most-used languages (powered by Recharts).
-* **Contribution Heatmap:** A theme-aware contribution graph that adapts colors to Dark/Light mode automatically.
+### 📊 Data Visualization & Activity
+* **"Quick View" Modal:** View comprehensive profile details without leaving the search page.
+* **⚡ Live Activity Feed:** Recent public timeline of commits, stars, PRs, issues, and forks with direct links.
+* **Top Languages Chart:** Analyzes repository data to generate interactive charts of top programming languages (powered by Recharts).
+* **Contribution Heatmap:** Theme-aware GitHub contribution graph adapting to dark/light modes.
 
 ---
 
@@ -52,13 +57,21 @@ Follow these steps to run the project locally.
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/YOUR_USERNAME/github-user-search.git](https://github.com/krayetor/alx-fe-reactjs/tree/main/github-user-search)
+git clone https://github.com/krayetor/github-user-search.git
 cd github-user-search
 ```
 
-🌟 Show your support
-Give a ⭐️ if you liked this project!
+### 2. Install dependencies
+```bash
+npm install
+```
 
+### 3. Start development server
+```bash
+npm run dev
+```
 
-### 💡 Final Tip before you push:
-Remember to replace **`YOUR_USERNAME`** in the links (Clone link, Contributing link) with your actual GitHub username so the links work!
+---
+
+## 🌟 Show your support
+Give a ⭐️ on [GitHub](https://github.com/krayetor/github-user-search) if you liked this project!

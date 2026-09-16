@@ -3,21 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0f172a" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Blocking theme-init script: runs synchronously before React loads,
+      preventing a flash-of-wrong-theme on page refresh.
+      Reads from localStorage and applies/removes the 'dark' class immediately.
+    -->
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme');
+        var theme = saved || 'dark';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
+    <!--
+      Critical inline styles: applied immediately after the theme script,
+      before any external CSS file loads. Prevents the white/light flash
+      (FOUC) that occurs in dev mode because Vite injects CSS via JS bundles,
+      not a static <link> tag — so there's a render gap between DOM-ready
+      and stylesheet application.
+    -->
+    <style>
+      html.dark  { background-color: #0f172a; color-scheme: dark;  }
+      html:not(.dark) { background-color: #f3f4f6; color-scheme: light; }
+    </style>
 
     <meta name="description" content="A powerful GitHub User Search tool built with React, Tailwind, and Recharts." />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="GitHub User Search | Dev Portfolio" />
-    <meta property="og:description" content="Search GitHub users, analyze top languages, and view profile stats with a sleek dark-mode UI." />
+    <meta property="og:description" content="Search GitHub users, benchmark developers head-to-head with Versus Mode, inspect live activity feeds, and export data in a sleek dark-mode UI." />
     <meta property="og:image" content="https://krayetor-gus.vercel.app/social-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GitHub User Search application showcase preview" />
     <meta property="og:url" content="https://krayetor-gus.vercel.app/" />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@krayetor" />
     <meta name="twitter:creator" content="@krayetor" />
-    <meta name="twitter:title" content="GitHub User Search App" />
-    <meta name="twitter:description" content="Check out my new React app! Features advanced search, data visualization, and persistent dark mode." />
+    <meta name="twitter:title" content="GitHub User Search | Dev Portfolio" />
+    <meta name="twitter:description" content="Search GitHub users, benchmark developers head-to-head with Versus Mode, inspect live activity feeds, and export data." />
     <meta name="twitter:image" content="https://krayetor-gus.vercel.app/social-preview.png" />
 
     <title>GitHub User Search</title>
